@@ -1,70 +1,51 @@
 cmake_minimum_required(VERSION 3.16)
+project(MiProyectoQt VERSION 1.0 LANGUAGES CXX)
 
-project(Aplicacion_Deportes VERSION 0.1 LANGUAGES CXX)
+# Configuración básica
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# Configuración automática para Qt
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+# Buscar Qt 6 (versión moderna)
+find_package(Qt6 REQUIRED COMPONENTS Widgets)
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
-
-set(PROJECT_SOURCES
-        main.cpp
-        mainwindow.cpp
-        mainwindow.h
-        mainwindow.ui
+# Archivos del proyecto
+set(SOURCES
+    src/main.cpp
+    src/mainwindow.cpp
+    src/agregardialog.cpp
 )
 
-if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(Aplicacion_Deportes
-        MANUAL_FINALIZATION
-        ${PROJECT_SOURCES}
-    )
-# Define target properties for Android with Qt 6 as:
-#    set_property(TARGET Aplicacion_Deportes APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
-#                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
-# For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
+set(HEADERS
+    src/mainwindow.h
+    src/agregardialog.h
+    src/deportista.h
+)
+
+set(FORMS
+    src/mainwindow.ui
+    src/agregardialog.ui
+)
+
+# Crear ejecutable
+add_executable(${PROJECT_NAME}
+    ${SOURCES}
+    ${HEADERS}
+    ${FORMS}
+)
+
+# Vinculación
+target_link_libraries(${PROJECT_NAME} PRIVATE
+    Qt6::Widgets
+)
+
+# Configuración UTF-8 para el compilador
+if(MSVC)
+    add_compile_options(/utf-8)
 else()
-    if(ANDROID)
-        add_library(Aplicacion_Deportes SHARED
-            ${PROJECT_SOURCES}
-        )
-# Define properties for Android with Qt 5 after find_package() calls as:
-#    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
-    else()
-        add_executable(Aplicacion_Deportes
-            ${PROJECT_SOURCES}
-        )
-    endif()
-endif()
-
-target_link_libraries(Aplicacion_Deportes PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
-
-# Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
-# If you are developing for iOS or macOS you should consider setting an
-# explicit, fixed bundle identifier manually though.
-if(${QT_VERSION} VERSION_LESS 6.1.0)
-  set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.Aplicacion_Deportes)
-endif()
-set_target_properties(Aplicacion_Deportes PROPERTIES
-    ${BUNDLE_ID_OPTION}
-    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
-    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
-    MACOSX_BUNDLE TRUE
-    WIN32_EXECUTABLE TRUE
-)
-
-include(GNUInstallDirs)
-install(TARGETS Aplicacion_Deportes
-    BUNDLE DESTINATION .
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
-)
-
-if(QT_VERSION_MAJOR EQUAL 6)
-    qt_finalize_executable(Aplicacion_Deportes)
+    add_compile_options(-finput-charset=UTF-8 -fexec-charset=UTF-8)
 endif()
