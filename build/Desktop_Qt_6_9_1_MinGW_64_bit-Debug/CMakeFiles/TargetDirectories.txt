@@ -1,5 +1,0 @@
-C:/Users/bryan/Aplicacion_Deporte/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/CMakeFiles/MiProyectoQt.dir
-C:/Users/bryan/Aplicacion_Deporte/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/CMakeFiles/edit_cache.dir
-C:/Users/bryan/Aplicacion_Deporte/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/CMakeFiles/rebuild_cache.dir
-C:/Users/bryan/Aplicacion_Deporte/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/CMakeFiles/MiProyectoQt_autogen_timestamp_deps.dir
-C:/Users/bryan/Aplicacion_Deporte/build/Desktop_Qt_6_9_1_MinGW_64_bit-Debug/CMakeFiles/MiProyectoQt_autogen.dir
